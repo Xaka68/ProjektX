@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Course;
 use App\Entity\Student;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,10 @@ class StudentController extends AbstractController
         $student->setFirstName('Xavier');
         $student->setLastName('Kamsu');
         $student->setSemester(2);
+        $course = new Course();
+        $course->setName('Histoire');
+        $entityManager->persist($course);
+        $student->addCourse($course);
         $entityManager->persist($student);
         $entityManager->flush();
 
