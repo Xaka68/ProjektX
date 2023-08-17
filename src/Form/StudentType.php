@@ -17,7 +17,7 @@ class StudentType extends AbstractType
             ->add('lastName')
             ->add('semester')
             ->add('courses')
-            ->add('editer', SubmitType::class)
+            ->add('edit', SubmitType::class)
         ;
     }
 

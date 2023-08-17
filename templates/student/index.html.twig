@@ -8,8 +8,9 @@
                  <h5 class="card-title">{{ student.firstName }}</h5>
                  <h6 class="card-subtitle mb-2 text-muted">{{ student.lastName }}</h6>
                  <p class="card-text">Semester : {{ student.semester }}.</p>
-                 <a href="#" class="card-link">Card link</a>
-                 <a href="#" class="card-link">Another link</a>
+                 <a href="{{ path('student.get', {id: student.id}) }}" class="card-link">Details</a>
+                 <a href="{{ path('student.delete', {id: student.id}) }}" class="card-link">Delete</a>
+                 <a href="{{ path('student.edit', {id: student.id}) }}" class="card-link">Edit</a>
             </div>
         </div>
         {% endfor %}

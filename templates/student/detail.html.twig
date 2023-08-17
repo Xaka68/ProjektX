@@ -1,0 +1,17 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+    <h3> Firstname: {{student.firstName }} </h3>
+    <h3> Lastname: {{student.lastName }} </h3>
+    <h3> Semester: {{student.semester }} </h3>
+    <h3> Courses:
+        {% for course in student.courses %}
+        <h4> {{ course.name }}</h4>
+        {%endfor %}
+    </h3>
+
+
+{%endblock %}
+{% block PageTitle %}
+Details
+{%endblock %}
