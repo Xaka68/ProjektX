@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Entity\Student;
+use App\Form\StudentType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,21 +16,12 @@ class StudentController extends AbstractController
     public function addStudent(ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
+        //creation of the entity who is the image of the form
+      $student = new Student();
+      $form = $this->createForm(StudentType::class, $student);
 
-        $student = new Student();
-        $student->setFirstName('Xavier');
-        $student->setLastName('Kamsu');
-        $student->setSemester(2);
-        $course = new Course();
-        $course->setName('Histoire');
-        $entityManager->persist($course);
-        $student->addCourse($course);
-        $entityManager->persist($student);
-        $entityManager->flush();
-
-
-        return $this->render('student/index.html.twig', [
-            'controller_name' => 'StudentController',
+        return $this->render('student/add-student.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
     #[Route('/update', name: 'student.update')]
