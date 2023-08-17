@@ -1,2 +1,25 @@
 {% extends 'template.html.twig' %}
 
+{% block body %}
+    <div class = "row">
+        {% for student in students  %}
+        <div class="card" style="width: 18rem;">
+         <div class="card-body">
+                 <h5 class="card-title">{{ student.firstName }}</h5>
+                 <h6 class="card-subtitle mb-2 text-muted">{{ student.lastName }}</h6>
+                 <p class="card-text">Semester : {{ student.semester }}.</p>
+                 <a href="#" class="card-link">Card link</a>
+                 <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block PageTitle %}
+    List of Students
+{% endblock %}
+
+{% block title %}
+{% endblock %}
