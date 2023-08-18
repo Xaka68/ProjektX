@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
+
 class Student
 {
     #[ORM\Id]
@@ -26,6 +28,13 @@ class Student
 
     #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'students')]
     private Collection $courses;
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private $createdAt;
+
+
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private $updatedAt;
+
 
     public function __construct()
     {
@@ -95,5 +104,42 @@ class Student
         $this->courses->removeElement($course);
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    #[ORM\ORM\PrePersist()]
+    public function onPrePersist() {
+
+      $this->createdAt = new \DateTime();
+      $this->updatedAt = new \DateTime();
+    }
+
+    #[ORM\ORM\PreUpdate()]
+    public function onPreUpdate() {
+
+        $this->updatedAt = new \DateTime();
     }
 }
