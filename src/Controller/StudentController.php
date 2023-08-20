@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Event\AddPersonEvent;
+use App\Event\AddStudentEvent;
 use App\Form\StudentType;
 use App\Service\Helpers;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('student')]
 class StudentController extends AbstractController
 {
+    public function __construct(private EventDispatcherInterface $dispatcher)
+    {
+    }
+
     #[
         Route('/edit/{id?0}', name: 'student.edit'),
 
@@ -47,6 +54,14 @@ class StudentController extends AbstractController
               $message = " has been updated";
           }
           $this->addFlash('success', $student->getFirstName().$message);
+          if ($new) {
+               $addStudentEvent = new AddStudentEvent($student);
+               $this->dispatcher->dispatch($addStudentEvent, AddStudentEvent::ADD_STUDENT_EVENT);
+          }
+
+
+
+
          return  $this->redirectToRoute('student.all');
 
       } else {
