@@ -9,8 +9,10 @@
                  <h6 class="card-subtitle mb-2 text-muted">{{ student.lastName }}</h6>
                  <p class="card-text">Semester : {{ student.semester }}.</p>
                  <a href="{{ path('student.get', {id: student.id}) }}" class="card-link">Details</a>
+                 {% if is_granted('ROLE_ADMIN') %}
                  <a href="{{ path('student.delete', {id: student.id}) }}" class="card-link">Delete</a>
                  <a href="{{ path('student.edit', {id: student.id}) }}" class="card-link">Edit</a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}

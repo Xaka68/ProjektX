@@ -15,9 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('student')]
 class StudentController extends AbstractController
 {
-    #[Route('/edit/{id?0}', name: 'student.edit')]
+    #[
+        Route('/edit/{id?0}', name: 'student.edit'),
+
+    ]
     public function addStudent($id, ManagerRegistry $doctrine, Request $request, Helpers $helpers): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $repository = $doctrine->getRepository(Student::class);
         $student = $repository->find($id);
         $new = false;
@@ -65,6 +69,7 @@ class StudentController extends AbstractController
     #[Route('/delete/{id}', name: 'student.delete')]
     public function deleteStudent($id, ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $repository = $doctrine->getRepository(Student::class);
         $student = $repository->find($id);
          if (!$student) {
