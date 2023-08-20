@@ -9,7 +9,11 @@
         <h4> {{ course.name }}</h4>
         {%endfor %}
     </h3>
-
+    <h3>
+        {% if app.user %}
+        Created by: {{ app.user.email }}
+        {% endif %}
+    </h3>
 
 {%endblock %}
 {% block PageTitle %}

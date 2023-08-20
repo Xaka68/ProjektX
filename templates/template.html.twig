@@ -25,6 +25,8 @@
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
+
+    <!-- Navbar-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
             <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
@@ -32,6 +34,19 @@
         </div>
     </form>
     <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a class="dropdown-item" href="{{path('app_logout')}}">Logout</a></li>
+                {% else %}
+                    <li><a class="dropdown-item" href="{{path('app_login')}}">Login</a></li>
+                {% endif %}
+
+            </ul>
+        </li>
+    </ul>
 </nav>
 
 
@@ -72,6 +87,14 @@
                 <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
             </div>
         </main>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            {% if app.user %}
+                {{ app.user.email }}
+            {% else %}
+                Anonymous
+            {% endif %}
+        </div>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">

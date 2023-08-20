@@ -35,6 +35,9 @@ class Student
     #[ORM\Column(type: "datetime", nullable: true)]
     private $updatedAt;
 
+    #[ORM\ManyToOne(inversedBy: 'students')]
+    private ?User $createdBy = null;
+
 
     public function __construct()
     {
@@ -141,5 +144,17 @@ class Student
     public function onPreUpdate() {
 
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
     }
 }

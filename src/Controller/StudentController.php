@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Service\Helpers;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudentController extends AbstractController
 {
     #[Route('/edit/{id?0}', name: 'student.edit')]
-    public function addStudent($id, ManagerRegistry $doctrine, Request $request): Response
+    public function addStudent($id, ManagerRegistry $doctrine, Request $request, Helpers $helpers): Response
     {
         $repository = $doctrine->getRepository(Student::class);
         $student = $repository->find($id);
@@ -37,6 +38,7 @@ class StudentController extends AbstractController
           $entityManager->flush();
           if ($new) {
               $message = " has been added";
+              $student->setCreatedBy($helpers->getUser());
           } else {
               $message = " has been updated";
           }
